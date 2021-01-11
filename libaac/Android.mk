@@ -6,7 +6,7 @@ LOCAL_PATH := $(call my-dir)
 #Guard compilation of system modules from vendor-target as these modules would be
 #scanned during vendor compilation. With introduction of groups feature, this would
 #raise compilation issues as certain commonsys deliverables would be missing
-ifeq ($(call is-product-in-list, qssi qssi_32),true)
+ifneq ($(filter $(QSSI_SUPPORTED_PLATFORMS),$(PRODUCT_BOARD_PLATFORM)),)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := aacEncode.cpp
@@ -30,7 +30,6 @@ LOCAL_CFLAGS += -O0
 LOCAL_SYSTEM_EXT_MODULE := true
 LOCAL_SANITIZE := integer_overflow
 include $(BUILD_SHARED_LIBRARY)
-endif
 
 include $(CLEAR_VARS)
 
@@ -59,3 +58,5 @@ LOCAL_CFLAGS += -O0
 
 LOCAL_SANITIZE := integer_overflow
 include $(BUILD_SHARED_LIBRARY)
+
+endif
